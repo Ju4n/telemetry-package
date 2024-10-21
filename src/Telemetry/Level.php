@@ -19,6 +19,6 @@ enum Level: string
 
     public static function getLevels()
     {
-        return array_map(fn($case) => $case->value, Level::cases());
+        return array_map(fn ($case) => $case->value, Level::cases());
     }
 }

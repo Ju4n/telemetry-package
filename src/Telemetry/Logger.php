@@ -8,7 +8,6 @@ use DateTimeImmutable;
 use DateTimeZone;
 use InvalidArgumentException;
 use Psr\Log\AbstractLogger;
-use Psr\Log\LogLevel;
 use Stringable;
 use Telemetry\Driver\DriverInterface;
 
@@ -26,7 +25,7 @@ class Logger extends AbstractLogger
         // check if string level is compatible with psr-3 levels
         $level = Level::tryFrom($level);
         if (!$level) {
-            throw new InvalidArgumentException(sprintf("Level should be an psr3 level compatible (%s)", implode(', ', Level::getLevels())));
+            throw new InvalidArgumentException(\sprintf("Level should be an psr3 level compatible (%s)", implode(', ', Level::getLevels())));
         }
 
         $dateTime = new DateTimeImmutable('now', $this->dateTimezone);
