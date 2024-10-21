@@ -99,7 +99,7 @@ $logger->setDriver($fileDriver);
 $logger->warning('This is a warning message');
 ```
 ### Summary
-In summary, `LoggerBuilder` is best suited for users looking for a quick and simple setup, while `Logger` is tailored for those who need comprehensive control over their logging configuration. Depending on your requirements, you can choose the approach that best fits your use case.
+Although we can do the same with `LoggerBuilder` or `Logger`, the first is designed for quickly testing.
 
 ## Using Transactions in the Logger
 
