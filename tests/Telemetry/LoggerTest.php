@@ -53,7 +53,7 @@ class LoggerTest extends TestCase
             );
 
         $logger = new Logger($this->mockDriver);
-        $logger->log(Level::DEBUG, 'my test message', ['attr' => 'value']);
+        $logger->log('debug', 'my test message', ['attr' => 'value']);
     }
 
     public function testStartLogingTransaction()
