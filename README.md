@@ -1,4 +1,4 @@
-# Telemetry Logger ✍
+# Telemetry Logger 📜
 
 **Telemetry Logger** is an extensible PHP package that allows logging to multiple destinations (drivers) and formats. It follows the [PSR-3](https://www.php-fig.org/psr/psr-3/) logging standard and is designed to be flexible and easily extensible with custom drivers and formatters.
 
@@ -23,6 +23,13 @@ You can install the package via Composer:
 ```bash
 composer require ju4n/telemetry-logger
 ```
+
+## Documentation
+
+- [Usage](doc/Usage.md)
+- [Extending Drivers and Formatters](/doc/Extend.md)
+- [Included Drivers and Formatters](/doc/Drivers-Formaters.md)
+- [UML Diagram](/doc/uml_diagram.png)
 
 
 ## Running Tests

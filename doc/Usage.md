@@ -1,5 +1,7 @@
 # Usage
 
+In the following sections, we'll explore how to effectively use the Logger class to meet your logging requirements.
+
 ## Using LoggerBuilder
 
 The `LoggerBuilder` class provides a convenient way to create and configure a logger instance. It allows you to specify the logging driver and formatter easily. Below are examples of how to use it in different scenarios.
