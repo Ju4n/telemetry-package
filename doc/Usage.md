@@ -16,7 +16,7 @@ use Telemetry\LoggerBuilder;
 $logger = LoggerBuilder::build();
 
 // Log a message with default settings
-$logger->log(Level::INFO, 'This is an info message');
+$logger->info('This is an info message');
 ```
 
 ### Custom Driver with Custom Formatter
@@ -56,7 +56,7 @@ $driver = new CLIDriver($formatter);
 $logger = new Logger($driver);
 
 // Log a message
-$logger->log(Level::INFO, 'This is an info message');
+$logger->info('This is an info message');
 ```
 
 ### Logger with FileDriver
@@ -73,7 +73,7 @@ $driver = new FileDriver($formatter, 'path/to/logfile.log');
 $logger = new Logger($driver);
 
 // Log a message
-$logger->log(Level::ERROR, 'This is an error message');
+$logger->error('This is an error message');
 ```
 
 ### Setting the Logger Driver
@@ -89,14 +89,14 @@ use Telemetry\Driver\FileDriver;
 $formatter = new LineFormatter();
 $driver = new CLIDriver($formatter);
 $logger = new Logger($driver);
-$logger->log(Level::INFO, 'Logging to CLI');
+$logger->infor('Logging to CLI');
 
 // Change to FileDriver
 $fileDriver = new FileDriver($formatter, 'path/to/logfile.log');
 $logger->setDriver($fileDriver);
 
 // Log a message to the file
-$logger->log(Level::WARNING, 'This is a warning message');
+$logger->warning('This is a warning message');
 ```
 ### Summary
 In summary, `LoggerBuilder` is best suited for users looking for a quick and simple setup, while `Logger` is tailored for those who need comprehensive control over their logging configuration. Depending on your requirements, you can choose the approach that best fits your use case.
@@ -123,8 +123,8 @@ Once the transaction is started, you can add log entries to it using the `addLog
 **Example**:
 
 ```php
-$transaction->addLogEntry(Level::INFO, 'This is an info message');
-$transaction->addLogEntry(Level::ERROR, 'This is an error message', ['error_code' => 404]);
+$transaction->info('This is an info message');
+$transaction->error('This is an error message', ['error_code' => 404]);
 ```
 
 ### Committing the Transaction

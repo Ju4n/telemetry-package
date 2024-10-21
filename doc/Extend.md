@@ -31,11 +31,11 @@ class MyCustomDriver extends AbstractFormattableDriver implements DriverInterfac
 ```
 
 2. **Set a Formatter**:
-   If your driver extends `AbstractFormattableDriver`, you have to pass the formatter in the constructor. 
+If your driver extends `AbstractFormattableDriver`, you have to pass the formatter in the constructor.
 
 ```php
-$myDriver = new MyCustomDriver();
-$myDriver->setFormatter(new MyCustomFormatter());
+$formatter = new MyCustomFormatter();
+$myDriver = new MyCustomDriver($formatter);
 ```
 
 ### Extending Formatters
