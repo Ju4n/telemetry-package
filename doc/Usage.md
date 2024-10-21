@@ -132,6 +132,62 @@ $logger->setDriver($fileDriver);
 // Log a message to the file
 $logger->log(Level::WARNING, 'This is a warning message');
 ```
-
 ### Summary
-In summary, LoggerBuilder is best suited for users looking for a quick and simple setup, while Logger is tailored for those who need comprehensive control over their logging configuration. Depending on your requirements, you can choose the approach that best fits your use case.
+In summary, `LoggerBuilder` is best suited for users looking for a quick and simple setup, while `Logger` is tailored for those who need comprehensive control over their logging configuration. Depending on your requirements, you can choose the approach that best fits your use case.
+
+## Using Transactions in the Logger
+
+The `Telemetry` logging package supports transaction logging, allowing you to group related log entries under a single transaction ID. This is useful for tracking the flow of events in complex operations. Here’s how to use transactions with the `Logger`.
+
+### Starting a Transaction
+
+To start a transaction, use the `startLogTransaction` method of the `Logger` class. You need to provide a unique transaction ID and an optional array of attributes.
+
+**Example**:
+
+```php
+$logger = LoggerBuilder::build();
+$transactionManager = $logger->startLogTransaction('transaction-123', ['user_id' => 1]);
+```
+
+### Adding Log Entries to a Transaction
+
+Once the transaction is started, you can add log entries to it using the `addLogEntry` method of the `TransactionManager`. You will need to specify the log level, message, and optional context for each log entry.
+
+**Example**:
+
+```php
+$transactionManager->addLogEntry(Level::INFO, 'This is an info message');
+$transactionManager->addLogEntry(Level::ERROR, 'This is an error message', ['error_code' => 404]);
+```
+
+### Committing the Transaction
+
+After adding all desired log entries, you must commit the transaction using the `commit` method of the `TransactionManager`. This action will write the entire transaction log to the specified driver (e.g., CLI or file).
+
+**Example**:
+
+```php
+$transactionManager->commit();
+```
+
+### Summary of Transaction Usage
+
+1. **Start a Transaction**: Use `startLogTransaction` with a unique ID and optional attributes.
+2. **Add Log Entries**: Use `addLogEntry` to add multiple log entries to the transaction.
+3. **Commit the Transaction**: Call `commit` to finalize and write the transaction log.
+
+### Example Workflow
+
+Here is a complete example of using transactions with the logger:
+
+```php
+$logger = LoggerBuilder::build();
+$transactionManager = $logger->startLogTransaction('transaction-123', ['user_id' => 1]);
+
+$transactionManager->addLogEntry(Level::INFO, 'Starting process...');
+$transactionManager->addLogEntry(Level::DEBUG, 'Process details', ['step' => 1]);
+$transactionManager->addLogEntry(Level::ERROR, 'An error occurred', ['error_code' => 404]);
+
+$transactionManager->commit();
+```
