@@ -33,7 +33,7 @@ $fileDriver = new FileDriver($formatter, 'path/to/logfile.log');
 $logger = LoggerBuilder::build($fileDriver);
 
 // Log a message
-$logger->log(Level::DEBUG, 'Debugging information');
+$logger->debug('Debugging information');
 ```
 
 __Note:__ Driver must implements `FormattableDriverInterface` to use a Formatter.
