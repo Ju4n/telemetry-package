@@ -19,36 +19,6 @@ $logger = LoggerBuilder::build();
 $logger->log(Level::INFO, 'This is an info message');
 ```
 
-### Custom Formatter
-
-If you want to use a custom formatter, you can pass it as an argument to the `build` method. Here’s an example using the `JSONFormatter`:
-
-```php
-use Telemetry\LoggerBuilder;
-use Telemetry\Formatter\JSONFormatter;
-
-$formatter = new JSONFormatter();
-$logger = LoggerBuilder::build(formatter: $formatter);
-
-// Log a message
-$logger->log(Level::INFO, 'This is an info message');
-```
-
-### Custom Driver
-
-You can also specify a custom driver, such as `FileDriver`, to log messages to a file. Here’s how to do it:
-
-```php
-use Telemetry\LoggerBuilder;
-use Telemetry\Driver\FileDriver;
-
-$fileDriver = new FileDriver('path/to/logfile.log');
-$logger = LoggerBuilder::build($fileDriver);
-
-// Log a message
-$logger->log(Level::ERROR, 'This is an error message');
-```
-
 ### Custom Driver with Custom Formatter
 
 You can combine both a custom driver and a custom formatter as well:
