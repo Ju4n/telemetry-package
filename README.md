@@ -1,5 +1,7 @@
 # Telemetry Logger 📜
 
+[CI](https://github.com/Ju4n/telemetry-package/actions/workflows/ci.yml/badge.svg)
+
 **Telemetry Logger** is an extensible PHP package that allows logging to multiple destinations (drivers) and formats. It follows the [PSR-3](https://www.php-fig.org/psr/psr-3/) logging standard and is designed to be flexible and easily extensible with custom drivers and formatters.
 
 ## Features
