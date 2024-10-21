@@ -1,10 +1,6 @@
-# docker-compose.yml
-version: '3'
 services:
   composer:
     image: composer:2.8.1
-    environment:
-      - COMPOSER_CACHE_DIR=/app/.cache/composer
     volumes:
       - .:/app
     restart: never

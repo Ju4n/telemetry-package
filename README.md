@@ -56,8 +56,13 @@ You can also generate a code coverage report:
 vendor/bin/phpunit --coverage-html coverage/
 ```
 
+If you don't have PHP installed on your local machine, you can run the tests using `docker-compose` by executing:
+
+```bash
+docker-compose run composer install && docker-compose run phpunit
+```
+
 ---
 ### License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-
