@@ -4,37 +4,27 @@ declare(strict_types=1);
 
 namespace Telemetry;
 
-use DateTimeImmutable;
 use DateTimeZone;
-use InvalidArgumentException;
-use Psr\Log\AbstractLogger;
 use Stringable;
 use Telemetry\Driver\DriverInterface;
 
-class Logger extends AbstractLogger
+class Logger extends AbstractTelemetryLogger
 {
     public function __construct(
-        private ?DriverInterface $driver = null,
-        private ?DateTimeZone $dateTimezone = null
+        protected ?DriverInterface $driver = null,
+        ?DateTimeZone $dateTimezone = null
     ) {
-        $this->dateTimezone = $dateTimezone ?: $this->dateTimezone = new DateTimeZone(date_default_timezone_get());
+        $dateTimezone = $dateTimezone ?: new DateTimeZone(date_default_timezone_get());
+        parent::__construct($dateTimezone);
     }
 
     public function log($level, string | Stringable $message, array $context = []): void
     {
-        // check if string level is compatible with psr-3 levels
-        $level = Level::tryFrom($level);
-        if (!$level) {
-            throw new InvalidArgumentException(\sprintf("Level should be an psr3 level compatible (%s)", implode(', ', Level::getLevels())));
-        }
-
-        $dateTime = new DateTimeImmutable('now', $this->dateTimezone);
-        $LogEntry = new LogEntry($dateTime, $level, $message, $context);
-
-        $this->driver->writeLogEntry($LogEntry);
+        $logEntry = $this->createLogEntry($level, $message, $context);
+        $this->driver->writeLogEntry($logEntry);
     }
 
-    public function startLogTransaction(string | int $transactionId, array $attributes): TransactionManager
+    public function logTransaction(string | int $transactionId, array $attributes): TransactionManager
     {
         $logEntryTransaction = new LogEntryTransaction($transactionId, $attributes);
 

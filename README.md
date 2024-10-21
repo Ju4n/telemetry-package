@@ -62,6 +62,9 @@ If you don't have PHP installed on your local machine, you can run the tests usi
 docker-compose run composer install && docker-compose run phpunit
 ```
 
+## Diagram
+![UML](/doc/uml_diagram.png)
+
 ---
 ### License
 

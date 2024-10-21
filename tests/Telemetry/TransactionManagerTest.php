@@ -40,8 +40,8 @@ class TransactionManagerTest extends TestCase
 
         $logTransaction = new LogEntryTransaction('test_id');
         $transactionManager = new TransactionManager($logTransaction, $this->mockDriver, $this->dateTimeZone);
-        $transactionManager->addLogEntry(Level::ALERT, 'test', ['attr' => 'value']);
-        $transactionManager->addLogEntry(Level::DEBUG, 'test', ['attr' => 'value']);
+        $transactionManager->alert('test', ['attr' => 'value']);
+        $transactionManager->debug('test', ['attr' => 'value']);
         $transactionManager->commit();
     }
 }

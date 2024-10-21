@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Telemetry\Driver;
 
 use PHPUnit\Framework\TestCase;
-use Telemetry\Exception\MissingFormatterException;
 use Telemetry\Formatter\FormatterInterface;
 use Telemetry\Formatter\LineFormatter;
 use Telemetry\LogEntry;
@@ -19,7 +18,6 @@ class CLIDriverTest extends TestCase
     protected FormatterInterface $mockFormatter;
     protected LogEntry $mockLogEntry;
     protected LogEntryTransaction $mockLogEntryTransaction;
-    protected CLIDriver $driver;
 
     public function setup(): void
     {
@@ -29,21 +27,20 @@ class CLIDriverTest extends TestCase
         ]);
         $this->mockLogEntry = $this->createMock(LogEntry::class);
         $this->mockLogEntryTransaction = $this->createMock(LogEntryTransaction::class);
-        $this->driver = new CLIDriver();
     }
 
     public function testSetAndGetFormatter()
     {
-        $this->driver->setFormatter(new LineFormatter());
-        $formatter = $this->driver->getFormatter();
+        $driver = new CLIDriver(new LineFormatter());
+        $formatter = $driver->getFormatter();
         $this->assertEquals(LineFormatter::class, $formatter::class);
     }
 
     public function testWriteLogEntry()
     {
-        $this->driver->setFormatter($this->mockFormatter);
+        $driver = new CLIDriver($this->mockFormatter);
         ob_start();
-        $this->driver->writeLogEntry($this->mockLogEntry);
+        $driver->writeLogEntry($this->mockLogEntry);
         $message = ob_get_contents();
         ob_end_clean();
         $this->assertEquals(self::FORMATTED_LOG_ENTRY, $message);
@@ -51,17 +48,12 @@ class CLIDriverTest extends TestCase
 
     public function testWriteLogEntryTransaction()
     {
-        $this->driver->setFormatter($this->mockFormatter);
+        $driver = new CLIDriver($this->mockFormatter);
+        $driver->setFormatter($this->mockFormatter);
         ob_start();
-        $this->driver->writeLogEntryTransaction($this->mockLogEntryTransaction);
+        $driver->writeLogEntryTransaction($this->mockLogEntryTransaction);
         $message = ob_get_contents();
         ob_end_clean();
         $this->assertEquals(self::FORMATTED_TRANSACTION_ENTRY, $message);
-    }
-
-    public function testFormattableDriverWithoutFormatter()
-    {
-        $this->expectException(MissingFormatterException::class);
-        $this->driver->writeLogEntryTransaction($this->mockLogEntryTransaction);
     }
 }

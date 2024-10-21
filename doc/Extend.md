@@ -31,7 +31,7 @@ class MyCustomDriver extends AbstractFormattableDriver implements DriverInterfac
 ```
 
 2. **Set a Formatter**:
-   If your driver extends `AbstractFormattableDriver`, you can set a custom formatter by using the `setFormatter()` method.
+   If your driver extends `AbstractFormattableDriver`, you have to pass the formatter in the constructor. 
 
 ```php
 $myDriver = new MyCustomDriver();

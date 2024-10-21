@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Telemetry;
 
-use DateTimeImmutable;
 use DateTimeZone;
 use Stringable;
 use Telemetry\Driver\DriverInterface;
 
-class TransactionManager
+class TransactionManager extends AbstractTelemetryLogger
 {
     public function __construct(
-        private LogEntryTransaction $logEntryTransaction,
-        private readonly DriverInterface $driver,
-        private readonly DateTimeZone $dateTimeZone
+        protected LogEntryTransaction $logEntryTransaction,
+        protected DriverInterface $driver,
+        DateTimeZone $dateTimezone
     ) {
+        parent::__construct($dateTimezone);
     }
 
-    public function addLogEntry(Level $level, string | Stringable $message, array $context = [])
+    public function log($level, string | Stringable $message, array $context = []): void
     {
-        $dateTime = new DateTimeImmutable('now', $this->dateTimeZone);
-        $this->logEntryTransaction->addLogEntry(new LogEntry($dateTime, $level, $message, $context));
+        $logEntry = $this->createLogEntry($level, $message, $context);
+        $this->logEntryTransaction->addLogEntry($logEntry);
     }
 
     public function commit()

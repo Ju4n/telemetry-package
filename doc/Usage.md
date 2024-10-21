@@ -58,9 +58,9 @@ use Telemetry\LoggerBuilder;
 use Telemetry\Driver\FileDriver;
 use Telemetry\Formatter\JSONFormatter;
 
-$fileDriver = new FileDriver('path/to/logfile.log');
 $formatter = new JSONFormatter();
-$logger = LoggerBuilder::build($fileDriver, $formatter);
+$fileDriver = new FileDriver($formatter, 'path/to/logfile.log');
+$logger = LoggerBuilder::build($fileDriver);
 
 // Log a message
 $logger->log(Level::DEBUG, 'Debugging information');
@@ -81,9 +81,8 @@ use Telemetry\Logger;
 use Telemetry\Driver\CLIDriver;
 use Telemetry\Formatter\JSONFormatter;
 
-$driver = new CLIDriver();
 $formatter = new JSONFormatter();
-$driver->setFormatter($formatter);
+$driver = new CLIDriver($formatter);
 $logger = new Logger($driver);
 
 // Log a message
@@ -99,9 +98,8 @@ use Telemetry\Logger;
 use Telemetry\Driver\FileDriver;
 use Telemetry\Formatter\LineFormatter;
 
-$driver = new FileDriver('path/to/logfile.log');
 $formatter = new LineFormatter();
-$driver->setFormatter($formatter);
+$driver = new FileDriver($formatter, 'path/to/logfile.log');
 $logger = new Logger($driver);
 
 // Log a message
@@ -118,15 +116,13 @@ use Telemetry\Driver\CLIDriver;
 use Telemetry\Driver\FileDriver;
 
 // Add CLI Driver
-$driver = new CLIDriver();
 $formatter = new LineFormatter();
-$driver->setFormatter($formatter);
+$driver = new CLIDriver($formatter);
 $logger = new Logger($driver);
 $logger->log(Level::INFO, 'Logging to CLI');
 
 // Change to FileDriver
-$fileDriver = new FileDriver('path/to/logfile.log');
-$fileDriver->setFormatter($formatter);
+$fileDriver = new FileDriver($formatter, 'path/to/logfile.log');
 $logger->setDriver($fileDriver);
 
 // Log a message to the file
@@ -141,13 +137,13 @@ The `Telemetry` logging package supports transaction logging, allowing you to gr
 
 ### Starting a Transaction
 
-To start a transaction, use the `startLogTransaction` method of the `Logger` class. You need to provide a unique transaction ID and an optional array of attributes.
+To start a transaction, use the `logTransaction` method of the `Logger` class. You need to provide a unique transaction ID and an optional array of attributes.
 
 **Example**:
 
 ```php
 $logger = LoggerBuilder::build();
-$transactionManager = $logger->startLogTransaction('transaction-123', ['user_id' => 1]);
+$transaction = $logger->logTransaction('transaction-123', ['user_id' => 1]);
 ```
 
 ### Adding Log Entries to a Transaction
@@ -157,8 +153,8 @@ Once the transaction is started, you can add log entries to it using the `addLog
 **Example**:
 
 ```php
-$transactionManager->addLogEntry(Level::INFO, 'This is an info message');
-$transactionManager->addLogEntry(Level::ERROR, 'This is an error message', ['error_code' => 404]);
+$transaction->addLogEntry(Level::INFO, 'This is an info message');
+$transaction->addLogEntry(Level::ERROR, 'This is an error message', ['error_code' => 404]);
 ```
 
 ### Committing the Transaction
@@ -168,13 +164,13 @@ After adding all desired log entries, you must commit the transaction using the 
 **Example**:
 
 ```php
-$transactionManager->commit();
+$transaction->commit();
 ```
 
 ### Summary of Transaction Usage
 
-1. **Start a Transaction**: Use `startLogTransaction` with a unique ID and optional attributes.
-2. **Add Log Entries**: Use `addLogEntry` to add multiple log entries to the transaction.
+1. **Start a Transaction**: Use `logTransaction` with a unique ID and optional attributes.
+2. **Add Log Entries**: Use PSR-3 log level methods to add multiple log entries to the transaction.
 3. **Commit the Transaction**: Call `commit` to finalize and write the transaction log.
 
 ### Example Workflow
@@ -183,11 +179,11 @@ Here is a complete example of using transactions with the logger:
 
 ```php
 $logger = LoggerBuilder::build();
-$transactionManager = $logger->startLogTransaction('transaction-123', ['user_id' => 1]);
+$transaction = $logger->logTransaction('transaction-123', ['user_id' => 1]);
 
-$transactionManager->addLogEntry(Level::INFO, 'Starting process...');
-$transactionManager->addLogEntry(Level::DEBUG, 'Process details', ['step' => 1]);
-$transactionManager->addLogEntry(Level::ERROR, 'An error occurred', ['error_code' => 404]);
+$transaction->info('Starting process...');
+$transaction->debug('Process details', ['step' => 1]);
+$transaction->error('An error occurred', ['error_code' => 404]);
 
-$transactionManager->commit();
+$transaction->commit();
 ```

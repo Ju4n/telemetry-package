@@ -24,17 +24,9 @@ class LoggerBuilderTest extends TestCase
         $this->assertInstanceOf(LineFormatter::class, $logger->getDriver()->getFormatter());
     }
 
-    public function testBuildLoggerWithCLIDriverAndJSONFormatter()
-    {
-        $logger = LoggerBuilder::build(formatter: new JSONFormatter());
-        $this->assertInstanceOf(Logger::class, $logger);
-        $this->assertInstanceOf(CLIDriver::class, $logger->getDriver());
-        $this->assertInstanceOf(JSONFormatter::class, $logger->getDriver()->getFormatter());
-    }
-
     public function testBuildLoggerWithFileDriverAndLineFormatter()
     {
-        $logger = LoggerBuilder::build(new FileDriver(self::FILENAME));
+        $logger = LoggerBuilder::build(new FileDriver(new LineFormatter(), self::FILENAME));
         $this->assertInstanceOf(Logger::class, $logger);
         $this->assertInstanceOf(FileDriver::class, $logger->getDriver());
         $this->assertInstanceOf(LineFormatter::class, $logger->getDriver()->getFormatter());
@@ -45,7 +37,7 @@ class LoggerBuilderTest extends TestCase
 
     public function testBuildLoggerWithFileDriverAndJSONFormatter()
     {
-        $logger = LoggerBuilder::build(new FileDriver(self::FILENAME), new JSONFormatter);
+        $logger = LoggerBuilder::build(new FileDriver(new JSONFormatter(), self::FILENAME), new JSONFormatter);
         $this->assertInstanceOf(Logger::class, $logger);
         $this->assertInstanceOf(FileDriver::class, $logger->getDriver());
         $this->assertInstanceOf(JSONFormatter::class, $logger->getDriver()->getFormatter());

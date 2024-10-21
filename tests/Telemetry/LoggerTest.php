@@ -23,6 +23,7 @@ class LoggerTest extends TestCase
     {
         $this->mockLogEntryTransaction = $this->createMock(LogEntryTransaction::class);
         $this->mockDriver = $this->createMock(DriverInterface::class);
+        $this->mockFormatter = $this->createMock(FormatterInterface::class);
     }
 
     public function testInstance()
@@ -59,14 +60,14 @@ class LoggerTest extends TestCase
     public function testStartLogingTransaction()
     {
         $logger = new Logger($this->mockDriver);
-        $transaction = $logger->startLogTransaction('test_id', ['attr' => 'value']);
+        $transaction = $logger->logTransaction('test_id', ['attr' => 'value']);
         $this->assertInstanceOf(TransactionManager::class, $transaction);
     }
 
     public function testSetAndGetDriver()
     {
         $logger = new Logger($this->mockDriver);
-        $driver = new FileDriver(self::FILENAME);
+        $driver = new FileDriver($this->mockFormatter, self::FILENAME);
         $logger->setDriver($driver);
         $getDriver = $logger->getDriver();
         $this->assertInstanceOf(FileDriver::class, $getDriver);

@@ -7,7 +7,7 @@ The `Telemetry` logging package comes with a set of built-in drivers and formatt
 1. **CLIDriver**
    - **Description**: The `CLIDriver` is designed for logging messages to the command line interface (CLI). It is particularly useful for development and debugging purposes.
    - **Usage**: The driver formats log entries and transactions using the set formatter and outputs them directly to the console.
-   - **Example Output**:
+   - **Example output using the LineFormatter**:
      ```
      [2024-10-21 12:00:00.000] INFO: Log message {"key": "value"}
      ```
