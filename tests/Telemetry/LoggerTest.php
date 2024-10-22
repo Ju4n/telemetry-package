@@ -7,9 +7,12 @@ namespace Telemetry;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Telemetry\Driver\CLIDriver;
 use Telemetry\Driver\DriverInterface;
 use Telemetry\Driver\FileDriver;
 use Telemetry\Formatter\FormatterInterface;
+use Telemetry\Formatter\JSONFormatter;
+use Telemetry\Formatter\LineFormatter;
 
 class LoggerTest extends TestCase
 {
@@ -73,6 +76,61 @@ class LoggerTest extends TestCase
         $this->assertInstanceOf(FileDriver::class, $getDriver);
 
         // delete created file.
+        unlink(self::FILENAME);
+    }
+
+    public function testLoggerWriteWithCLIDriver()
+    {
+        $logger = new Logger(new CLIDriver(new LineFormatter()));
+        ob_start();
+        $logger->alert('This is a test alert');
+        $line = ob_get_contents();
+        ob_end_clean();
+        $this->assertIsString($line);
+        $this->assertMatchesRegularExpression(
+            '/\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}\] ALERT: This is a test alert \[\]\\n/',
+            $line
+        );
+    }
+
+    public function testLoggerWriteWithFileDriver()
+    {
+        $logger = new Logger(new FileDriver(new LineFormatter(), self::FILENAME));
+        $logger->alert('This is a test alert');
+        $line = file_get_contents(self::FILENAME);
+        $this->assertIsString($line);
+        $this->assertMatchesRegularExpression(
+            '/\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}\] ALERT: This is a test alert \[\]\\n/',
+            $line
+        );
+        unlink(self::FILENAME);
+    }
+
+    public function testLoggerWriteWithCLIDriverAndJSONFormatter()
+    {
+        $logger = new Logger(new CLIDriver(new JSONFormatter()));
+        ob_start();
+        $logger->alert('This is a test alert');
+        $line = ob_get_contents();
+        ob_end_clean();
+        $this->assertIsString($line);
+        $this->assertMatchesRegularExpression(
+            '{"datetime":"[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}","level":"ALERT","message":"This is a test alert","context":\[\]}',
+            $line
+        );
+    }
+
+    public function testLoggerWriteWithFileDriverAndJSONFormatter()
+    {
+        $logger = new Logger(new FileDriver(new JSONFormatter(), self::FILENAME));
+        $logger->alert('This is a test alert');
+        $line = file_get_contents(self::FILENAME);
+        $this->assertIsString($line);
+        $this->assertIsString($line);
+        $this->assertMatchesRegularExpression(
+            '{"datetime":"[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}","level":"ALERT","message":"This is a test alert","context":\[\]}',
+            $line
+        );
         unlink(self::FILENAME);
     }
 }

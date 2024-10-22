@@ -24,12 +24,15 @@ class LineFormatter implements FormatterInterface
 
     public function formatLogTransaction(LogEntryTransaction $logEntryTransaction): string
     {
-        $message = \sprintf('[START TRANSACTION ID: %s]>>', $logEntryTransaction->getTransactionId()) . PHP_EOL;
-        $message .= \sprintf("[Attributes] %s", json_encode($logEntryTransaction->getAttributes())) . PHP_EOL;
+        $message = \sprintf(
+            '[START TRANSACTION ID: %s with Attributes: %s]',
+            $logEntryTransaction->getTransactionId(),
+            json_encode($logEntryTransaction->getAttributes())
+        ) . PHP_EOL;
         foreach ($logEntryTransaction->getLogEntrys() as $LogEntry) {
-            $message .= $this->formatLogEntry($LogEntry);
+            $message .= \sprintf('>> %s', $this->formatLogEntry($LogEntry));
         }
-        $message .= \sprintf('<<[END TRANSACTION ID: %s]', $logEntryTransaction->getTransactionId()) . PHP_EOL;
+        $message .= \sprintf('[END TRANSACTION ID: %s]', $logEntryTransaction->getTransactionId()) . PHP_EOL;
 
         return $message;
     }

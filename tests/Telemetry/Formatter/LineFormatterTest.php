@@ -71,11 +71,10 @@ class LineFormatterTest extends TestCase
         $this->assertIsString($formattedText);
         $this->assertEquals(
             $formattedText,
-            "[START TRANSACTION ID: transaction_1]>>" . PHP_EOL .
-                "[Attributes] {\"param_1\":\"value_1\"}" . PHP_EOL .
-                "[{$this->dateTime->format('Y-m-d H:i:s.v')}] DEBUG: This is a DEBUG message {\"param_1\":\"value_1\",\"param_2\":\"value_2\"}" . PHP_EOL .
-                "[{$this->dateTime->format('Y-m-d H:i:s.v')}] ALERT: This is an ALERT message []" . PHP_EOL .
-                "<<[END TRANSACTION ID: {$this->logEntryTransaction->getTransactionId()}]" . PHP_EOL
+            "[START TRANSACTION ID: transaction_1 with Attributes: {\"param_1\":\"value_1\"}]" . PHP_EOL .
+            ">> [{$this->dateTime->format('Y-m-d H:i:s.v')}] DEBUG: This is a DEBUG message {\"param_1\":\"value_1\",\"param_2\":\"value_2\"}" . PHP_EOL .
+            ">> [{$this->dateTime->format('Y-m-d H:i:s.v')}] ALERT: This is an ALERT message []" . PHP_EOL .
+            "[END TRANSACTION ID: {$this->logEntryTransaction->getTransactionId()}]" . PHP_EOL
         );
     }
 }

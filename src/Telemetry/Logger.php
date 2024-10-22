@@ -24,7 +24,7 @@ class Logger extends AbstractTelemetryLogger
         $this->driver->writeLogEntry($logEntry);
     }
 
-    public function logTransaction(string | int $transactionId, array $attributes): TransactionManager
+    public function logTransaction(string | int $transactionId, array $attributes = []): TransactionManager
     {
         $logEntryTransaction = new LogEntryTransaction($transactionId, $attributes);
 

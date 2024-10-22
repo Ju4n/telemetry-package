@@ -44,4 +44,26 @@ class TransactionManagerTest extends TestCase
         $transactionManager->debug('test', ['attr' => 'value']);
         $transactionManager->commit();
     }
+
+    public function testGetTransactionManagerWithCLIDriverAndLineFormatterAndWrite()
+    {
+        $logger = LoggerBuilder::build();
+        $transaction = $logger->logTransaction('test');
+        $transaction->debug('this is a debug');
+        $transaction->alert('this is an alert');
+        $transaction->error('here is the error');
+        ob_start();
+        $transaction->commit();
+        $lines = ob_get_contents();
+        ob_end_clean();
+        $this->assertIsString($lines);
+        $this->assertDoesNotMatchRegularExpression(
+            '/[START TRANSACTION ID: test with Attributes: []]\n
+                >> \[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}\] DEBUG: this is a debug []\n
+                >> \[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}\] ALERT: this is an alert []\n
+                >> \[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}\] ERROR: here is the error []\n
+            [END TRANSACTION ID: test]\n/',
+            $lines
+        );
+    }
 }

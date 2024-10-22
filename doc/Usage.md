@@ -8,7 +8,7 @@ The `LoggerBuilder` class provides a convenient way to create and configure a lo
 
 ### Default Logger
 
-You can create a default logger that logs to the CLI using the default line formatter:
+You can create a default logger that logs to the CLI using the default `Lineformatter`:
 
 ```php
 use Telemetry\LoggerBuilder;

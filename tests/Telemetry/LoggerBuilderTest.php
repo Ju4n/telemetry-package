@@ -45,4 +45,18 @@ class LoggerBuilderTest extends TestCase
         // delete file
         unlink(self::FILENAME);
     }
+
+    public function testBuildLoggerAndWrite()
+    {
+        $logger = LoggerBuilder::build();
+        ob_start();
+        $logger->alert('This is a test alert');
+        $line = ob_get_contents();
+        ob_end_clean();
+        $this->assertIsString($line);
+        $this->assertMatchesRegularExpression(
+            '/\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}\] ALERT: This is a test alert \[\]\\n/',
+            $line
+        );
+    }
 }
