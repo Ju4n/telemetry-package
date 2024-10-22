@@ -68,8 +68,8 @@ class MyCustomFormatter implements FormatterInterface
    You can use your custom formatter by passing it to the driver when setting it up.
 
 ```php
-$driver = new MyCustomDriver();
-$driver->setFormatter(new MyCustomFormatter());
+$formatter = new MyCustomFormatter();
+$driver = new MyCustomDriver($formatter);
 $logger = new Logger($driver);
 ```
 
