@@ -89,7 +89,7 @@ use Telemetry\Driver\FileDriver;
 $formatter = new LineFormatter();
 $driver = new CLIDriver($formatter);
 $logger = new Logger($driver);
-$logger->infor('Logging to CLI');
+$logger->info('Logging to CLI');
 
 // Change to FileDriver
 $fileDriver = new FileDriver($formatter, 'path/to/logfile.log');
@@ -99,7 +99,7 @@ $logger->setDriver($fileDriver);
 $logger->warning('This is a warning message');
 ```
 ### Summary
-Although we can do the same with `LoggerBuilder` or `Logger`, the first is designed for quickly testing.
+Although we can do the same with `LoggerBuilder` or `Logger`, the first was designed for quickly testing.
 
 ## Using Transactions in the Logger
 
