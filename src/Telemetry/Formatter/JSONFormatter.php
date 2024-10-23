@@ -15,7 +15,7 @@ class JSONFormatter implements FormatterInterface
     {
         $logEntryArray = $this->formatLogEntryArray($logEntry->toArray());
 
-        return json_encode($logEntryArray);
+        return json_encode($logEntryArray) . PHP_EOL;
     }
 
     public function formatLogTransaction(LogEntryTransaction $logEntryTransaction): string
@@ -31,7 +31,7 @@ class JSONFormatter implements FormatterInterface
             ),
         ];
 
-        return json_encode($message);
+        return json_encode($message) . PHP_EOL;
     }
 
     /**

@@ -61,7 +61,7 @@ class JSONFormatterTest extends TestCase
         $this->assertIsString($formattedText);
         $this->assertEquals(
             $formattedText,
-            "{\"datetime\":\"{$dateTime}\",\"level\":\"ALERT\",\"message\":\"This is a test Message\",\"context\":{\"attribute_1\":\"value_1\",\"attribute_2\":\"value_2\"}}"
+            "{\"datetime\":\"{$dateTime}\",\"level\":\"ALERT\",\"message\":\"This is a test Message\",\"context\":{\"attribute_1\":\"value_1\",\"attribute_2\":\"value_2\"}}\n"
         );
     }
 
@@ -73,7 +73,7 @@ class JSONFormatterTest extends TestCase
         $this->assertIsString($formattedText);
         $this->assertEquals(
             $formattedText,
-            "{\"transaction_id\":\"transaction_1\",\"attributes\":{\"param_1\":\"value_1\"},\"logs\":[{\"datetime\":\"{$dateTime}\",\"level\":\"DEBUG\",\"message\":\"This is a DEBUG message\",\"context\":{\"param_1\":\"value_1\",\"param_2\":\"value_2\"}},{\"datetime\":\"{$dateTime}\",\"level\":\"ALERT\",\"message\":\"This is an ALERT message\",\"context\":[]}]}"
+            "{\"transaction_id\":\"transaction_1\",\"attributes\":{\"param_1\":\"value_1\"},\"logs\":[{\"datetime\":\"{$dateTime}\",\"level\":\"DEBUG\",\"message\":\"This is a DEBUG message\",\"context\":{\"param_1\":\"value_1\",\"param_2\":\"value_2\"}},{\"datetime\":\"{$dateTime}\",\"level\":\"ALERT\",\"message\":\"This is an ALERT message\",\"context\":[]}]}\n"
         );
     }
 }
