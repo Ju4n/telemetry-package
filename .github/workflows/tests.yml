@@ -22,4 +22,4 @@ jobs:
 
       - name: PHPStan Analysis
         run: |
-          vendor/bin/phpstan anatlyse --configuration=phpstan.neon
+          vendor/bin/phpstan analyse --configuration=phpstan.neon
