@@ -21,5 +21,5 @@ jobs:
           vendor/bin/phpunit --stop-on-failure
 
       - name: PHPStan Analysis
-        runs: |
+        run: |
           vendor/bin/phpstan anatlyse --configuration=phpstan.neon
