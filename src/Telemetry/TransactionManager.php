@@ -24,7 +24,7 @@ class TransactionManager extends AbstractTelemetryLogger
         $this->logEntryTransaction->addLogEntry($logEntry);
     }
 
-    public function commit()
+    public function commit(): void
     {
         $this->driver->writeLogEntryTransaction($this->logEntryTransaction);
     }

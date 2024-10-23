@@ -53,7 +53,7 @@ class LineFormatterTest extends TestCase
         ));
     }
 
-    public function testFormatLogEntry()
+    public function testFormatLogEntry(): void
     {
         $formatter = new LineFormatter();
         $formattedText = $formatter->formatLogEntry($this->LogEntry);
@@ -64,7 +64,7 @@ class LineFormatterTest extends TestCase
         );
     }
 
-    public function testFormatLogTransaction()
+    public function testFormatLogTransaction(): void
     {
         $formatter = new LineFormatter();
         $formattedText = $formatter->formatLogTransaction($this->logEntryTransaction);

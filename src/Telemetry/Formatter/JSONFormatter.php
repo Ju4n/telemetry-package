@@ -34,7 +34,12 @@ class JSONFormatter implements FormatterInterface
         return json_encode($message);
     }
 
-    private function formatLogEntryArray(array $logEntryArray)
+    /**
+     * @param array<string, mixed> $logEntryArray
+     *
+     * @return array<string, mixed> $logEntryArray
+     */
+    private function formatLogEntryArray(array $logEntryArray): array
     {
         $logEntryArray['level'] = strtoupper($logEntryArray['level']->value);
         $logEntryArray['datetime'] = strtoupper($logEntryArray['datetime']->format(self::DATETIME_FORMAT));

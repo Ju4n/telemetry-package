@@ -29,14 +29,14 @@ class CLIDriverTest extends TestCase
         $this->mockLogEntryTransaction = $this->createMock(LogEntryTransaction::class);
     }
 
-    public function testSetAndGetFormatter()
+    public function testSetAndGetFormatter(): void
     {
         $driver = new CLIDriver(new LineFormatter());
         $formatter = $driver->getFormatter();
         $this->assertEquals(LineFormatter::class, $formatter::class);
     }
 
-    public function testWriteLogEntry()
+    public function testWriteLogEntry(): void
     {
         $driver = new CLIDriver($this->mockFormatter);
         ob_start();
@@ -46,7 +46,7 @@ class CLIDriverTest extends TestCase
         $this->assertEquals(self::FORMATTED_LOG_ENTRY, $message);
     }
 
-    public function testWriteLogEntryTransaction()
+    public function testWriteLogEntryTransaction(): void
     {
         $driver = new CLIDriver($this->mockFormatter);
         $driver->setFormatter($this->mockFormatter);

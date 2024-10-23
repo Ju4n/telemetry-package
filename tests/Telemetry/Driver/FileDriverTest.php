@@ -35,14 +35,14 @@ class FileDriverTest extends TestCase
         unlink(self::FILENAME);
     }
 
-    public function testSetAndGetFormatter()
+    public function testSetAndGetFormatter(): void
     {
         $driver = new FileDriver(new LineFormatter(), self::FILENAME);
         $formatter = $driver->getFormatter();
         $this->assertEquals(LineFormatter::class, $formatter::class);
     }
 
-    public function testWriteLogEntry()
+    public function testWriteLogEntry(): void
     {
         $driver = new FileDriver($this->mockFormatter, self::FILENAME);
         $driver->writeLogEntry($this->mockLogEntry);
@@ -50,7 +50,7 @@ class FileDriverTest extends TestCase
         $this->assertEquals(self::FORMATTED_LOG_ENTRY, $message);
     }
 
-    public function testWriteLogEntryTransaction()
+    public function testWriteLogEntryTransaction(): void
     {
         $driver = new FileDriver($this->mockFormatter, self::FILENAME);
         $driver->writeLogEntryTransaction($this->mockLogEntryTransaction);

@@ -16,7 +16,7 @@ abstract class AbstractTelemetryLogger extends AbstractLogger
     {
     }
 
-    protected function validateLevel($level): Level
+    protected function validateLevel(string $level): Level
     {
         $level = Level::tryFrom($level);
         if (!$level) {
@@ -28,7 +28,10 @@ abstract class AbstractTelemetryLogger extends AbstractLogger
         return $level;
     }
 
-    protected function createLogEntry($level, string|Stringable $message, array $context = []): LogEntry
+    /**
+     * @param array<string, string> $context
+     */
+    protected function createLogEntry(string $level, string|Stringable $message, array $context = []): LogEntry
     {
         $level = $this->validateLevel($level);
         $dateTime = new DateTimeImmutable('now', $this->dateTimezone);

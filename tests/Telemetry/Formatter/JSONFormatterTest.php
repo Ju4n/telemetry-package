@@ -53,7 +53,7 @@ class JSONFormatterTest extends TestCase
         ));
     }
 
-    public function testFormatLogEntry()
+    public function testFormatLogEntry(): void
     {
         $dateTime = $this->dateTime->format('Y-m-d H:i:s.v');
         $formatter = new JSONFormatter();
@@ -65,7 +65,7 @@ class JSONFormatterTest extends TestCase
         );
     }
 
-    public function testFormatLogTransaction()
+    public function testFormatLogTransaction(): void
     {
         $dateTime = $this->dateTime->format('Y-m-d H:i:s.v');
         $formatter = new JSONFormatter();

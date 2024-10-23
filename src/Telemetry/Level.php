@@ -17,7 +17,10 @@ enum Level: string
     case INFO      = LogLeveL::INFO;
     case DEBUG     = LogLevel::DEBUG;
 
-    public static function getLevels()
+    /**
+     * @return array<string> 
+     */
+    public static function getLevels(): array
     {
         return array_map(fn ($case) => $case->value, Level::cases());
     }

@@ -9,6 +9,9 @@ use Stringable;
 
 class LogEntry
 {
+    /**
+     * @param array<string, string> $context
+     */
     public function __construct(
         private readonly DateTimeImmutable $dateTime,
         private readonly Level $level,
@@ -27,6 +30,9 @@ class LogEntry
         return $this->message;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getContext(): array
     {
         return $this->context;
@@ -37,6 +43,9 @@ class LogEntry
         return $this->dateTime;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

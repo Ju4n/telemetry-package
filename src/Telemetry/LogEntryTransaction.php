@@ -7,24 +7,30 @@ namespace Telemetry;
 class LogEntryTransaction
 {
     /**
-     * @param array<LogEntry>
+     * @var array<LogEntry> $logEntrys
      */
-    protected array $LogEntrys;
+    protected array $logEntrys;
 
+    /**
+     * @param array<string, string> $attributes
+     */
     public function __construct(
         protected readonly int | string $transactionId,
         protected readonly array $attributes = []
     ) {
     }
 
-    public function addLogEntry(LogEntry $LogEntry)
+    public function addLogEntry(LogEntry $LogEntry): void
     {
-        $this->LogEntrys[] = $LogEntry;
+        $this->logEntrys[] = $LogEntry;
     }
 
+    /**
+     * @return array<LogEntry>
+     */
     public function getLogEntrys(): array
     {
-        return $this->LogEntrys;
+        return $this->logEntrys;
     }
 
     public function getTransactionId(): int | string
@@ -32,6 +38,9 @@ class LogEntryTransaction
         return $this->transactionId;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getAttributes(): array
     {
         return $this->attributes;

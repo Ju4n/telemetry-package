@@ -29,21 +29,22 @@ class LoggerTest extends TestCase
         $this->mockFormatter = $this->createMock(FormatterInterface::class);
     }
 
-    public function testInstance()
+    public function testInstance(): void
     {
         $logger = new Logger($this->mockDriver);
         $this->assertInstanceOf(Logger::class, $logger);
     }
 
-    public function testLogFunctionLevelException()
+    public function testLogFunctionLevelException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $logger = new Logger($this->mockDriver);
         $logger->log('MYCUSTMOLEVEL', 'my test message', ['att' => 'value']);
     }
 
-    public function testLogFunction()
+    public function testLogFunction(): void
     {
+        // @phpstan-ignore-next-line
         $this->mockDriver->method('writeLogEntry')
             ->willReturnCallback(
                 function ($logEntry) {
@@ -60,14 +61,14 @@ class LoggerTest extends TestCase
         $logger->log('debug', 'my test message', ['attr' => 'value']);
     }
 
-    public function testStartLogingTransaction()
+    public function testStartLogingTransaction(): void
     {
         $logger = new Logger($this->mockDriver);
         $transaction = $logger->logTransaction('test_id', ['attr' => 'value']);
         $this->assertInstanceOf(TransactionManager::class, $transaction);
     }
 
-    public function testSetAndGetDriver()
+    public function testSetAndGetDriver(): void
     {
         $logger = new Logger($this->mockDriver);
         $driver = new FileDriver($this->mockFormatter, self::FILENAME);
@@ -79,7 +80,7 @@ class LoggerTest extends TestCase
         unlink(self::FILENAME);
     }
 
-    public function testLoggerWriteWithCLIDriver()
+    public function testLoggerWriteWithCliDriver(): void
     {
         $logger = new Logger(new CLIDriver(new LineFormatter()));
         ob_start();
@@ -93,7 +94,7 @@ class LoggerTest extends TestCase
         );
     }
 
-    public function testLoggerWriteWithFileDriver()
+    public function testLoggerWriteWithFileDriver(): void
     {
         $logger = new Logger(new FileDriver(new LineFormatter(), self::FILENAME));
         $logger->alert('This is a test alert');
@@ -106,7 +107,7 @@ class LoggerTest extends TestCase
         unlink(self::FILENAME);
     }
 
-    public function testLoggerWriteWithCLIDriverAndJSONFormatter()
+    public function testLoggerWriteWithCliDriverAndJsonFormatter(): void
     {
         $logger = new Logger(new CLIDriver(new JSONFormatter()));
         ob_start();
@@ -120,7 +121,7 @@ class LoggerTest extends TestCase
         );
     }
 
-    public function testLoggerWriteWithFileDriverAndJSONFormatter()
+    public function testLoggerWriteWithFileDriverAndJsonFormatter(): void
     {
         $logger = new Logger(new FileDriver(new JSONFormatter(), self::FILENAME));
         $logger->alert('This is a test alert');

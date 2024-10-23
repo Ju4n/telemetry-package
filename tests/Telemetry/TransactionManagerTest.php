@@ -21,7 +21,7 @@ class TransactionManagerTest extends TestCase
         $this->dateTimeZone = new DateTimeZone(date_default_timezone_get());
     }
 
-    public function testTransactionManager()
+    public function testTransactionManager(): void
     {
         // test result in mock method
         $this->mockDriver->method('writeLogEntryTransaction')
@@ -45,7 +45,7 @@ class TransactionManagerTest extends TestCase
         $transactionManager->commit();
     }
 
-    public function testGetTransactionManagerWithCLIDriverAndLineFormatterAndWrite()
+    public function testGetTransactionManagerWithCLIDriverAndLineFormatterAndWrite(): void
     {
         $logger = LoggerBuilder::build();
         $transaction = $logger->logTransaction('test');

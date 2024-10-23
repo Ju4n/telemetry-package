@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-declare(strict_types=1);
-
 namespace Telemetry;
 
 use PHPUnit\Framework\TestCase;
@@ -16,7 +14,7 @@ class LoggerBuilderTest extends TestCase
 {
     const FILENAME = 'test_file.log';
 
-    public function testBuildLoggerWithCLIDriverAndLineFormatter()
+    public function testBuildLoggerWithCliDriverAndLineFormatter(): void
     {
         $logger = LoggerBuilder::build();
         $this->assertInstanceOf(Logger::class, $logger);
@@ -24,7 +22,7 @@ class LoggerBuilderTest extends TestCase
         $this->assertInstanceOf(LineFormatter::class, $logger->getDriver()->getFormatter());
     }
 
-    public function testBuildLoggerWithFileDriverAndLineFormatter()
+    public function testBuildLoggerWithFileDriverAndLineFormatter(): void
     {
         $logger = LoggerBuilder::build(new FileDriver(new LineFormatter(), self::FILENAME));
         $this->assertInstanceOf(Logger::class, $logger);
@@ -35,9 +33,9 @@ class LoggerBuilderTest extends TestCase
         unlink(self::FILENAME);
     }
 
-    public function testBuildLoggerWithFileDriverAndJSONFormatter()
+    public function testBuildLoggerWithFileDriverAndJsonFormatter(): void
     {
-        $logger = LoggerBuilder::build(new FileDriver(new JSONFormatter(), self::FILENAME), new JSONFormatter);
+        $logger = LoggerBuilder::build(new FileDriver(new JSONFormatter(), self::FILENAME));
         $this->assertInstanceOf(Logger::class, $logger);
         $this->assertInstanceOf(FileDriver::class, $logger->getDriver());
         $this->assertInstanceOf(JSONFormatter::class, $logger->getDriver()->getFormatter());
@@ -46,7 +44,7 @@ class LoggerBuilderTest extends TestCase
         unlink(self::FILENAME);
     }
 
-    public function testBuildLoggerAndWrite()
+    public function testBuildLoggerAndWrite(): void
     {
         $logger = LoggerBuilder::build();
         ob_start();
