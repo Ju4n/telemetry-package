@@ -17,7 +17,8 @@ class FileDriver extends AbstractFormattableDriver implements DriverInterface
     {
         parent::__construct($formatter);
 
-        $this->fileObject = new SplFileObject($filepath, 'w');
+        // flag a for append if the file is already created
+        $this->fileObject = new SplFileObject($filepath, 'a');
     }
 
     public function writeLogEntry(LogEntry $logEntry): void
